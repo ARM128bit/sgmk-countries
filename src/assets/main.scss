@@ -1,0 +1,71 @@
+@use 'sass:selector';
+@use "sass:map";
+
+@import './styles/_vars.scss';
+// @import './styles/_forms.scss';
+// @import './styles/_scrollbar.scss';
+
+// @import './styles/_fonts.scss';
+// @import './styles/_icons.scss';
+// @media only screen and (max-width: 1080px) {
+//   @import './styles/adaptive/lg.scss';
+// }
+
+// @media only screen and (max-width: 792px) {
+//   @import './styles/adaptive/md.scss';
+// }
+
+// @media only screen and (max-width: 640px) {
+//   @import './styles/adaptive/sm.scss';
+// }
+
+body {
+  font-family: 'Roboto', sans-serif, serif;
+  font-size: $font-size-md;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-md;
+  letter-spacing: 0;
+  text-align: left;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+a {
+  text-decoration-thickness: 1px;
+}
+
+.custom-scroller {
+  max-height: calc(100vh - 200px);
+  min-height: 380px;
+  max-width: 100%;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    width: $scrollbar-width;
+    height: $scrollbar-width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-white-smoke;
+    border-radius: $scrollbar-border-radius;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $scrollbar-thumb-color;
+    border-radius: $scrollbar-border-radius;
+    border: $scrollbar-border;
+  }
+  scrollbar-width: thin;
+  scrollbar-color: $scrollbar-thumb-color $color-white-smoke;
+  
+  &.noscroll {
+    overflow: visible !important;
+    max-width: unset !important;
+    max-height: unset !important;
+    height: fit-content;
+    width: fit-content;
+  }
+}

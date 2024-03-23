@@ -1,0 +1,57 @@
+$font-size-sm: 12px;
+$font-size-md: 14px;
+$font-size-l: 16px;
+$font-size-xl: 18px;
+
+$font-weight-light: 300;
+$font-weight-normal: 400;
+
+$line-height-sm: 14px;
+$line-height-md: 16px;
+
+$input-height-md: 30px;
+$input-p-y: 6px;
+$input-p-x: 10px;
+$default-input-padding: 0 0.5rem;
+
+$color-azure: #007BFF;
+$color-jordy-blue: #99CAFF;
+$color-uranium-blue: #B3D7FF;
+$color-battleship-gray: #858585;
+$color-denim: #0061CA;
+$color-engineering-orange: #CA0000;
+$color-french-gray: #CED4DA;
+$color-geyser: #DEE2E6;
+$color-bright-gray: #EAEAEA;
+$color-gunmetal: #343C44;
+$color-black-olive: #404040;
+$color-red: #FF0000;
+$color-dark-red: #CB0000;
+$color-orange: #FFA500;
+$color-onyx: #343A40;
+$color-silver: #A9A9A9;
+$color-light-silver: #BFBFBF;
+$color-slate-gray: #6C757D;
+$color-ghost-white: #F8F9FA;
+$color-white-light-warm: #F9F9F9;
+$color-white-warm: #F6F6F6;
+$color-wild-sand: #F5F5F5;
+$color-white-smoke: #F3F3F3;
+$color-white: #FFFFFF;
+$color-outer-space: #4B545C;
+$color-platinum: #E5E5E5;
+$color-green: #17A300;
+
+$color-red-rgb: 255, 0, 0;
+$color-white-smoke-rgb: 243, 243, 243;
+$color-jordy-blue-rgb: 153, 202, 255;
+$color-uranium-blue-rgb: 179, 215, 255;
+$color-silver-rgb: 169, 169, 169;
+
+$enable-validation-icons: false;
+
+$scrollbar-width: 4px;
+$scrollbar-background-color: #ffffff00;
+$scrollbar-thumb-color: $color-french-gray;
+$scrollbar-border: 3px solid $color-french-gray;
+$scrollbar-border-radius: calc($scrollbar-width / 2);
