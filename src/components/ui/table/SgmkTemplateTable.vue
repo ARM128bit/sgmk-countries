@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="T">
-import type {  Col } from "./types"
+import type { Col } from "@sgmk-types/index";
+import SgmkTableHeader from "./SgmkTableHeader.vue";
 interface DefaultProps {
   id: string;
   data: T[];
@@ -15,7 +16,7 @@ withDefaults(defineProps<DefaultProps>(), {
 
 <template>
   <table :id="id">
-
+    <sgmk-table-header :cols="cols" />
   </table>
 </template>
 

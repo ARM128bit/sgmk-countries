@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Col } from './types';
+import type { Col } from "@sgmk-types/index";
 
 interface DefaultProps {
   cols: Col[];
@@ -10,13 +10,15 @@ withDefaults(defineProps<DefaultProps>(), {
 });
 </script>
 <template>
-    <thead>
-        <th v-for="col in cols">
-            {{ col.label }}
-        </th>
-    </thead>
+  <thead>
+    <th v-for="col in cols" class="sgmk-header-cell">
+      {{ col.label }}
+    </th>
+  </thead>
 </template>
 
-<style scoped>
-
+<style scoped lang="scss">
+.sgmk-header-cell {
+  border: 1px solid $color-gunmetal;
+}
 </style>

@@ -1,14 +1,29 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import TextInput from '@components/ui/SgmkTextInput.vue';
-import IconEmpty from '@components/icons/IconEmpty.vue';
+import { ref } from "vue";
+import type { Col } from "@sgmk-types/index";
+import TextInput from "@components/ui/SgmkTextInput.vue";
+import SgmkIcon from "@components/ui/SgmkIcon.vue";
+import SgmkTable from "@components/ui/table/SgmkTemplateTable.vue";
 
-const text = ref('')
+const text = ref("");
+
+const cols: Col[] = [
+  {
+    name: "id",
+    label: "ID",
+  },
+];
 </script>
 
 <template>
   <main>
-    <TextInput v-model="text" label="Поле поиска" id="test-text" placeholder="" />
-    <IconEmpty />
+    <TextInput
+      v-model="text"
+      label="Поле поиска"
+      id="test-text"
+      placeholder="ddd"
+    />
+    <sgmk-table id="countries-table" :cols="cols" :data="[]" />
+    <SgmkIcon />
   </main>
 </template>

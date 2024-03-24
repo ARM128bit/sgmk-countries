@@ -16,5 +16,15 @@ export default defineConfig({
       '@sgmk-types': fileURLToPath(new URL('./src/sgmk-types', import.meta.url)),
       '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
     }
-  }
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData(source: any, fp: any) {
+          if (fp.endsWith('_vars.scss') || fp.endsWith('main.scss')) return source;
+          return `@import "@/assets/styles/_vars.scss";${source}`
+        } 
+      }
+    }
+  },
 })
