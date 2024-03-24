@@ -1,8 +1,8 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T">
 import type { Col } from "@sgmk-types/index";
 
 interface DefaultProps {
-  cols: Col[];
+  cols: Array<Col<T>>;
 }
 
 withDefaults(defineProps<DefaultProps>(), {
@@ -11,7 +11,7 @@ withDefaults(defineProps<DefaultProps>(), {
 </script>
 <template>
   <thead>
-    <th v-for="col in cols" class="sgmk-header-cell">
+    <th v-for="col in cols" :key="col.name" class="sgmk-header-cell">
       {{ col.label }}
     </th>
   </thead>

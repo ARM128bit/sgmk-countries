@@ -1,5 +1,7 @@
-import { shallowRef } from "vue";
+import { shallowRef, type ShallowRef } from "vue";
 import { defineStore } from "pinia";
+import type { Paginator } from "@sgmk-types/index";
+import countriesApi from "@api/routes";
 
 type LangName = {
   [key: string]: {
@@ -116,7 +118,7 @@ type Flag = PngSvg & {
   alt: string;
 };
 
-export type Contry = {
+export type Country = {
   name: CountryName;
   tld: TLD;
   cca2: string;
@@ -154,8 +156,16 @@ export type Contry = {
 };
 
 export const useCountryStore = defineStore("country", () => {
-  const list = shallowRef([]);
-  const paginator = {};
+  const list: ShallowRef<Array<Country>> = shallowRef([]);
+  const paginator: Paginator = {
+    page: 1,
+    total: 0
+  };
 
-  return { list, paginator };
+  const loadList = async () => {
+    const { data } = await countriesApi.getAllContries<Array<Country>>()
+    list.value = data
+  }
+
+  return { list, paginator, loadList };
 });

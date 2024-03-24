@@ -4,7 +4,7 @@ import { computed } from "vue";
 interface DefaultProps {
   id: string;
   label: string;
-  required: boolean;
+  required?: boolean;
 }
 const props = withDefaults(defineProps<DefaultProps>(), {
   id: "",
