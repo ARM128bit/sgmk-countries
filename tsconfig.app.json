@@ -16,9 +16,11 @@
     "types": ["vite/client"],
     "paths": {
       "@api/*": ["api/*"],
-      "@stores/*": ["stores/*"],
-      "@components/*": ["components/*"],
       "@views/*": ["views/*"],
+      "@hooks/*": ["hooks/*"],
+      "@stores/*": ["stores/*"],
+      "@layouts/*": ["layouts/*"],
+      "@components/*": ["components/*"],
       "@sgmk-types/*": ["sgmk-types/*"],
     }
   }

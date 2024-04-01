@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="T">
 import type { Col } from "@sgmk-types/index";
+import SgmkCell from "./SgmkTableCell.vue";
 
 interface DefaultProps {
   cols: Array<Col<T>>;
@@ -12,7 +13,9 @@ withDefaults(defineProps<DefaultProps>(), {
 <template>
   <thead>
     <th v-for="col in cols" :key="col.name" class="sgmk-header-cell">
-      {{ col.label }}
+      <sgmk-cell>
+        {{ col.label }}
+      </sgmk-cell>
     </th>
   </thead>
 </template>

@@ -1,14 +1,18 @@
-import { shallowRef, type ShallowRef } from "vue";
 import { defineStore } from "pinia";
-import type { Paginator } from "@sgmk-types/index";
-import countriesApi from "@api/routes";
+import { getAllContries } from "@api/routes";
+import useList from "@hooks/useList";
+import usePaginator from "@hooks/usePaginator";
+import { computed } from "vue";
 
 type LangName = {
-  [key: string]: {
-    official: string;
-    common: string;
-  };
+  official: string;
+  common: string;
 };
+
+type Translations = {
+  [key: string]: LangName
+};
+
 type Lang = {
   [key: string]: string;
 };
@@ -21,7 +25,7 @@ type Currency = {
 };
 
 type CountryName = LangName & {
-  nativeName: LangName;
+  nativeName: Translations;
 };
 
 type TLD = string[];
@@ -135,7 +139,7 @@ export type Country = {
   region: Region;
   subregion?: SubRegion;
   languages: Lang;
-  translations: LangName;
+  translations: Translations;
   latlng: Coordinates;
   landlocked: boolean;
   area: number;
@@ -155,17 +159,14 @@ export type Country = {
   postalCode: PostalCode;
 };
 
+
 export const useCountryStore = defineStore("country", () => {
-  const list: ShallowRef<Array<Country>> = shallowRef([]);
-  const paginator: Paginator = {
-    page: 1,
-    total: 0
-  };
+  const paginator = usePaginator()
+  const { list, loadList } = useList<Country>(getAllContries)
 
-  const loadList = async () => {
-    const { data } = await countriesApi.getAllContries<Array<Country>>()
-    list.value = data
-  }
-
-  return { list, paginator, loadList };
+  const getList = computed(() => {
+    return list.value.slice((paginator.pagination.page - 1) * paginator.pagination.size, paginator.pagination.page * paginator.pagination.size)
+  })
+   
+  return { list, paginator, loadList, getList };
 });

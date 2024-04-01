@@ -19,13 +19,23 @@ export type Col<T> = {
     form: VNode
   };
   width?: string;
+  component?: VNode;
 };
  
 export interface AxiosResponseList<T> extends AxiosResponse {
   data:  Array<T>
 }
 
-export type Paginator = {
-  page: number
-  total: number
+export type SelectLabel<T = string, K = number> = {
+  id: K
+  label: T
+}
+
+export interface IDefaultInput<T> {
+  id: string;
+  modelValue: T;
+  label?: string;
+  placeholder?: string;
+  required?: boolean;
+  disabled?: boolean;
 }

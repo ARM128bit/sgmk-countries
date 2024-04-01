@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import Default from "@layouts/Default.vue";
 </script>
 
 <template>
-  <router-view />
+  <Default>
+    <router-view />
+  </Default>
 </template>
 
 <style scoped>

@@ -20,12 +20,12 @@
 // }
 
 body {
-  font-family: 'Roboto', sans-serif, serif;
   font-size: $font-size-md;
   font-weight: $font-weight-normal;
   line-height: $line-height-md;
   letter-spacing: 0;
   text-align: left;
+  margin: 0;
 }
 
 html,
@@ -68,4 +68,9 @@ a {
     height: fit-content;
     width: fit-content;
   }
+}
+
+
+table {
+  border-collapse: collapse;
 }
