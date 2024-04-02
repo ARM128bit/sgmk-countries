@@ -9,7 +9,7 @@ import SgmkCell from "@components/ui/table/SgmkTableCell.vue";
 import { type Country } from "@stores/country";
 import { getAllContries } from "@api/routes";
 
-const { loadList, paginator, getList } = useList<Country>();
+const { loadList, paginator, getList } = useList<Country>(getAllContries);
 
 // const getList = computed(() => {
 //   return list.value.slice(

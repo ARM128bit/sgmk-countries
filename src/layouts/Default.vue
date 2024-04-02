@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { SelectLabel } from "@sgmk-types/index";
 import { useAppLanguageStore } from "@stores/appLanguage";
 const langStore = useAppLanguageStore();
 </script>
@@ -8,9 +9,10 @@ const langStore = useAppLanguageStore();
       <div class="layout__lang-selector">
         <sgmk-select
           v-model="langStore.currentLanguage"
+          id="app-language-selector"
           :options="langStore.languages"
-          id-key="id"
-          label-key="label"
+          :option-id="(option: SelectLabel) => option.id"
+          :option-label="(option: SelectLabel) => option.label"
         >
         </sgmk-select>
       </div>

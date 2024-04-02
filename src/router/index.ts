@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@views/HomeView.vue'
-import PageNotFound from '@views/PageNotFound/PageNotFound.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,17 +6,22 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: import('@views/HomeView.vue')
     },
     {
       path: '/about',
       name: 'about',
-      component: () => import('../views/AboutView.vue')
+      component: () => import('@views/AboutView.vue')
     },
+    // {
+    //   path: '/country/',
+    //   name: 'country',
+    //   component: () => import('@views/AboutView.vue')
+    // },
     {
       path: '/404',
       name: 'NotFound',
-      component: PageNotFound
+      component: () => import('@views/PageNotFound/PageNotFound.vue')
     },
     { path: '/:pathMatch(.*)*', redirect: '404' }
   ]

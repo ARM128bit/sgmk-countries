@@ -33,7 +33,6 @@ export type SelectLabel<T = string, K = number> = {
 
 export interface IDefaultInput<T> {
   id: string;
-  modelValue: T;
   label?: string;
   placeholder?: string;
   required?: boolean;

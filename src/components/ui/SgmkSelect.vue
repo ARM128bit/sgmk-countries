@@ -10,24 +10,24 @@
       :class="{ 'sgmk-select__value--opened': opened }"
       @click="opened = !opened"
     >
-      {{ labelKey ? internalValue[labelKey] : internalValue }}
+      {{ model ? optionLabel(model) : model }}
     </div>
     <div v-if="opened" class="sgmk-select__dropdown">
       <ul class="sgmk-select__dropdown-list">
         <li
           v-if="options?.length > 0"
-          v-for="(option, idx) in options"
-          :key="idKey ? option[labelKey] : idx"
+          v-for="option in options"
+          :key="optionId(option)"
           class="sgmk-select__dropdown-option"
           @click="
             () => {
-              internalValue = option;
+              model = option;
               opened = false;
             }
           "
         >
           <slot name="option" :option="option">
-            {{ idKey ? option[labelKey] : option }}
+            {{ optionLabel(option) }}
           </slot>
         </li>
         <li class="sgmk-select__dropdown-option" v-else>
@@ -38,42 +38,27 @@
   </wrapper-input>
 </template>
 <script setup lang="ts" generic="ValT">
-import { ref, type PropType, computed } from "vue";
+import { ref } from "vue";
 import WrapperInput from "./SgmkWrapperInput.vue";
 import type { IDefaultInput } from "@sgmk-types/index";
 
 interface SelectProps {
-  modelValue: PropType<ValT>;
-  options: PropType<ValT[]>;
-  idKey?: string;
-  labelKey?: string;
+  options: ValT[];
+  optionId: (option: ValT) => number | string;
+  optionLabel: (option: ValT) => string;
 }
 
-const props = withDefaults(defineProps<IDefaultInput<ValT> & SelectProps>(), {
+withDefaults(defineProps<IDefaultInput<ValT> & SelectProps>(), {
   label: "",
   placeholder: "",
   required: false,
   disabled: false,
-  modelValue: undefined,
   options: () => [],
-  idKey: "",
-  labelKey: "",
+  // optionId: (option: PropType<ValT>) => option["id"],
+  // optionLabel: (option: PropType<ValT>) => option["label"],
 });
 
-const emit = defineEmits({
-  "update:model-value": (val: ValT) => {
-    return val;
-  },
-});
-
-const internalValue = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(val) {
-    emit("update:model-value", val);
-  },
-});
+const model = defineModel<ValT>()
 
 const opened = ref(false);
 </script>
