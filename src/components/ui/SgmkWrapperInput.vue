@@ -28,6 +28,5 @@ const labelText = computed(() =>
 <style lang="scss" scoped>
 .form-wrapper {
   position: relative;
-  background-color: $color-white;
 }
 </style>

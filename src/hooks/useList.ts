@@ -1,26 +1,30 @@
 import { computed, shallowRef, type Ref, ref } from "vue";
 import usePaginator from "./usePaginator";
-import type { AxiosResponseList } from "@sgmk-types/index";
+import { EnumApiServices } from "@sgmk-types/index";
 
-export default function useList<T>(
-  api: () => Promise<AxiosResponseList<T>>,
-) {
-  const paginator = usePaginator()
+export default function useList<T>(api?: Function) {
+  const paginator = usePaginator();
   const list: Ref<T[]> = shallowRef([]);
   const loading: Ref<boolean> = ref(false);
 
-  const loadList = async () => {
-    loading.value = true
-    try {
-      const { data } = await api();
-      list.value = data;
-      paginator.setTotal(data.length);
-    } catch(e) {
-      console.log(e)
-    } finally {
-      loading.value = false
+  const loadList = async (service: EnumApiServices = EnumApiServices.all, code?: string, params: Record<string, any> = {}) => {
+    if (!!api) {
+      loading.value = true;
+      try {
+        const { data } = await api(service, code, params);
+        setList(data);
+        paginator.setTotal(data.length);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        loading.value = false;
+      }
     }
   };
+
+  const setList = (data: T[]) => {
+    list.value = data;
+  }
 
   const getList = computed(() => {
     return list.value.slice(
@@ -29,5 +33,5 @@ export default function useList<T>(
     );
   });
 
-  return { list, loading, paginator, getList, loadList };
+  return { list, loading, paginator, getList, loadList, setList };
 }

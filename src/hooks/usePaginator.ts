@@ -41,9 +41,9 @@ export default function usePaginator(): Paginator {
   };
 
   watch(
-    () => pagination.size,
+    pagination,
     () => {
-      if (maxPage.value < pagination.page) pagination.page = 1;
+      if (maxPage.value < pagination.page) pagination.page = maxPage.value;
     }
   );
 

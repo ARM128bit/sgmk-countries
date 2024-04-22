@@ -54,11 +54,9 @@ withDefaults(defineProps<IDefaultInput<ValT> & SelectProps>(), {
   required: false,
   disabled: false,
   options: () => [],
-  // optionId: (option: PropType<ValT>) => option["id"],
-  // optionLabel: (option: PropType<ValT>) => option["label"],
 });
 
-const model = defineModel<ValT>()
+const model = defineModel<ValT>();
 
 const opened = ref(false);
 </script>
@@ -66,20 +64,22 @@ const opened = ref(false);
 <style scoped lang="scss">
 .sgmk-select {
   &__value {
+    height: 28px;
     padding: 5px;
-    border: 1px solid $color-onyx;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
     border-radius: 3px;
     &--opened {
       border-radius: 3px 3px 0 0;
-      border-bottom: 0;
     }
   }
   &__dropdown {
     position: absolute;
     width: 100%;
-    background-color: $color-white;
-    border: 1px solid $color-onyx;
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
     border-top: 0;
+    top: 27px;
     z-index: 100;
     &-list {
       margin: 5px 0;
@@ -89,9 +89,9 @@ const opened = ref(false);
     &-option {
       padding: 5px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background-color 0.3s;
       &:hover {
-        background-color: $color-light-silver;
+        background-color: var(--color-background-mute);
       }
     }
   }

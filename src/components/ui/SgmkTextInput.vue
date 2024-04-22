@@ -9,8 +9,7 @@ withDefaults(defineProps<IDefaultInput<ValT>>(), {
   disabled: false,
 });
 
-const model = defineModel<ValT>()
-
+const model = defineModel<ValT>();
 </script>
 <template>
   <wrapper-input :id="id" :label="label" :required="required">
@@ -18,6 +17,7 @@ const model = defineModel<ValT>()
       v-model="model"
       type="text"
       :placeholder="placeholder"
+      class="sgmk-input"
       :class="{ 'sgmk-input--disabled': disabled }"
       :disabled="disabled"
     />
@@ -25,8 +25,14 @@ const model = defineModel<ValT>()
 </template>
 <style scoped lang="scss">
 .sgmk-input {
+  height: 30px;
+  font-size: 14px;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  transition: all 0.3s ease;
+  color: var(--color-text);
   &--disabled {
+    color: var(--color-text);
   }
 }
-
 </style>

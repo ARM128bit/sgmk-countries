@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, type UnwrapNestedRefs } from "vue";
 import type { Paginator } from "hooks/usePaginator";
 import { UITranslations, useAppLanguageStore } from "@stores/appLanguage";
 
 interface DefaultProps {
-  paginator: Paginator;
-  disabled: boolean;
-  sectionSize: number;
+  paginator: UnwrapNestedRefs<Paginator>;
+  disabled?: boolean;
+  sectionSize?: number;
 }
 
 const props = withDefaults(defineProps<DefaultProps>(), {
@@ -37,10 +37,10 @@ const middlePagesSection = computed(() => {
     return [currentPage.value, currentPage.value + 1];
   }
 
-  if (currentPage.value === props.paginator?.maxPage.value - 2) {
+  if (currentPage.value === props.paginator?.maxPage - 2) {
     return [currentPage.value - 1];
   }
-  if (currentPage.value === props.paginator?.maxPage.value - 3) {
+  if (currentPage.value === props.paginator?.maxPage - 3) {
     return [currentPage.value - 1, currentPage.value];
   }
   return [currentPage.value - 1, currentPage.value, currentPage.value + 1];
@@ -48,9 +48,9 @@ const middlePagesSection = computed(() => {
 
 const lastPagesSection = computed(() => {
   return [
-    props.paginator?.maxPage.value - 2,
-    props.paginator?.maxPage.value - 1,
-    props.paginator?.maxPage.value,
+    props.paginator?.maxPage - 2,
+    props.paginator?.maxPage - 1,
+    props.paginator?.maxPage,
   ];
 });
 
@@ -59,7 +59,7 @@ const isFirst = computed(() => {
 });
 
 const isLast = computed(() => {
-  return currentPage.value === props.paginator?.maxPage.value;
+  return currentPage.value === props.paginator?.maxPage;
 });
 </script>
 
@@ -79,9 +79,9 @@ const isLast = computed(() => {
     >
       {{ paginatorTranslation.prevPage }}
     </div>
-    <template v-if="props.paginator?.maxPage.value <= sectionSize * 2">
+    <template v-if="props.paginator?.maxPage <= sectionSize * 2">
       <div
-        v-for="p in props.paginator?.maxPage.value"
+        v-for="p in props.paginator?.maxPage"
         class="paginator__page"
         :class="{
           'paginator__page--current': currentPage === p,
@@ -110,7 +110,7 @@ const isLast = computed(() => {
       <div
         v-if="
           currentPage >= sectionSize &&
-          currentPage <= props.paginator?.maxPage.value - 2
+          currentPage <= props.paginator?.maxPage - 2
         "
         v-for="p in middlePagesSection"
         class="paginator__page"
@@ -123,7 +123,7 @@ const isLast = computed(() => {
         {{ p }}
       </div>
       <div
-        v-if="currentPage < props.paginator?.maxPage.value - 3"
+        v-if="currentPage < props.paginator?.maxPage - 3"
         class="paginator__dots"
       >
         ...
@@ -150,7 +150,7 @@ const isLast = computed(() => {
     <div
       class="paginator__btn paginator__btn--last"
       :class="{ 'paginator__btn--disabled': isLast || disabled }"
-      @click="() => (currentPage = props.paginator.maxPage.value)"
+      @click="() => (currentPage = props.paginator.maxPage)"
     >
       {{ paginatorTranslation.lastPage }}
     </div>
@@ -170,22 +170,22 @@ const isLast = computed(() => {
     text-align: center;
     padding: 5px;
     cursor: pointer;
-    border: 1px solid $color-light-silver;
+    border: 1px solid var(--color-border);
     transition: all 0.3s ease;
   }
   &__page {
     width: 30px;
     margin-right: 1px;
     &--current {
-      background-color: $color-light-silver;
+      background-color: var(--color-border);
       cursor: default;
     }
     &--disabled {
-      background-color: $color-white-light-warm;
-      color: $color-white;
+      background-color: var(--vt-c-text-dark-2);
+      color: var(--vt-c-white);
     }
     &:not(&--disabled):not(&--current):hover {
-      background-color: $color-light-silver;
+      background-color: var(--vt-c-divider-dark-2);
     }
   }
   &__btn {
@@ -197,7 +197,7 @@ const isLast = computed(() => {
     }
 
     &:not(&--disabled):not(&--current):hover {
-      background-color: $color-light-silver;
+      background-color: var(--vt-c-divider-dark-2);
     }
   }
 }

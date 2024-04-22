@@ -1,8 +1,7 @@
+import { computed, reactive, ref, watch } from "vue";
 import { defineStore } from "pinia";
-import { getAllContries } from "@api/routes";
+import { getAllContries, getCountryByService } from "@api/routes";
 import useList from "@hooks/useList";
-import usePaginator from "@hooks/usePaginator";
-import { computed } from "vue";
 
 type LangName = {
   official: string;
@@ -10,7 +9,7 @@ type LangName = {
 };
 
 type Translations = {
-  [key: string]: LangName
+  [key: string]: LangName;
 };
 
 type Lang = {
@@ -65,7 +64,7 @@ type SubRegion =
 
 type Continents = Exclude<Region, "Americas" | "Antarctic"> & Americas;
 
-type Coordinates = [number, number];
+export type Coordinates = [number, number];
 
 type Demonym = {
   [key: string]: {
@@ -129,6 +128,7 @@ export type Country = {
   ccn3: string;
   cca3: string;
   cioc: string;
+  borders: string[];
   independent: boolean;
   status: status;
   unMember: boolean;
@@ -144,7 +144,7 @@ export type Country = {
   landlocked: boolean;
   area: number;
   demonyms: Demonym;
-  flag: "🇨🇾";
+  flag: string;
   maps: Map;
   population: number;
   gini: Gini;
@@ -159,14 +159,44 @@ export type Country = {
   postalCode: PostalCode;
 };
 
+export type CountryKeys = keyof Country;
 
 export const useCountryStore = defineStore("country", () => {
-  const paginator = usePaginator()
-  const { list, loadList } = useList<Country>(getAllContries)
+  const offlineFilter = reactive({
+    onlyFavourites: false,
+  });
+  const favourites = ref(new Set<Country["cca3"]>());
+
+  watch(
+    () => offlineFilter.onlyFavourites,
+    (val) => {
+      if (val) {
+        paginator.setTotal(favourites.value.size);
+      } else {
+        paginator.setTotal(list.value.length);
+      }
+      paginator.setPage(1);
+    }
+  );
+
+  const { paginator, loadList, list, loading } =
+    useList<Country>(getCountryByService);
+
+  
 
   const getList = computed(() => {
-    return list.value.slice((paginator.pagination.page - 1) * paginator.pagination.size, paginator.pagination.page * paginator.pagination.size)
-  })
-   
-  return { list, paginator, loadList, getList };
+    return list.value
+      .filter((c) => {
+        if (!offlineFilter.onlyFavourites) {
+          return true;
+        }
+        return favourites.value.has(c.cca3);
+      })
+      .slice(
+        (paginator.pagination.page - 1) * paginator.pagination.size,
+        paginator.pagination.page * paginator.pagination.size
+      );
+  });
+
+  return { offlineFilter, favourites, loading, paginator, loadList, getList };
 });

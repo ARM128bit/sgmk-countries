@@ -6,18 +6,19 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: import('@views/HomeView.vue')
+      component: () => import('@views/Countries/List.vue')
     },
     {
       path: '/about',
       name: 'about',
       component: () => import('@views/AboutView.vue')
     },
-    // {
-    //   path: '/country/',
-    //   name: 'country',
-    //   component: () => import('@views/AboutView.vue')
-    // },
+    {
+      path: '/country/:cca3',
+      name: 'country',
+      props: true,
+      component: () => import('@views/Countries/Country.vue')
+    },
     {
       path: '/404',
       name: 'NotFound',

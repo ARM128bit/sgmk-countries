@@ -22,6 +22,6 @@ withDefaults(defineProps<DefaultProps>(), {
 
 <style scoped lang="scss">
 .sgmk-header-cell {
-  border: 1px solid $color-gunmetal;
+  border: 1px solid var(--color-border);
 }
 </style>
